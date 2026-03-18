@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Wallet - Style Street</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<nav>
+  <a href="index.html">Home</a>
+</nav>
+
+<div class="product-page">
+
+  <!-- LEFT SIDE -->
+  <div class="product-info">
+    <h1>Custom Leather Wallet</h1>
+    <p>$59</p>
+
+    <p>
+      Premium handcrafted leather wallet. Customize it with your own design,
+      engraving, or artwork.
+    </p>
+
+    <button onclick="addToCart('Wallet')">Add to Cart</button>
+  </div>
+
+  <!-- RIGHT SIDE -->
+  <div class="product-images">
+
+    <!-- MAIN IMAGE -->
+    <img id="mainImage" src="wallet1.jpg" width="300">
+
+    <!-- THUMBNAILS -->
+    <div class="thumbnails">
+      <img src="wallet1.jpg" onclick="switchImage('wallet1.jpg')">
+      <img src="wallet2.jpg" onclick="switchImage('wallet2.jpg')">
+      <img src="wallet3.jpg" onclick="switchImage('wallet3.jpg')">
+    </div>
+
+    <!-- DRAWING TOOLS -->
+    <h3>Customize Design</h3>
+
+    <input type="color" id="colorPicker" value="#ffffff">
+    <input type="range" id="brushSize" min="1" max="10" value="2">
+
+    <br><br>
+
+    <canvas id="drawingCanvas" width="300" height="300"></canvas>
+
+    <br><br>
+
+    <button onclick="clearCanvas()">Clear</button>
+
+  </div>
+
+</div>
+
+<script src="script.js"></script>
+
+<script>
+const canvas = document.getElementById("drawingCanvas");
+const ctx = canvas.getContext("2d");
+
+let drawing = false;
+let currentImage = "wallet1.jpg";
+let drawings = {};
+
+canvas.addEventListener("mousedown", () => drawing = true);
+canvas.addEventListener("mouseup", () => drawing = false);
+canvas.addEventListener("mousemove", draw);
+
+function draw(e) {
+  if (!drawing) return;
+
+  let color = document.getElementById("colorPicker").value;
+  let size = document.getElementById("brushSize").value;
+
+  ctx.fillStyle = color;
+  ctx.beginPath();
+  ctx.arc(e.offsetX, e.offsetY, size, 0, Math.PI * 2);
+  ctx.fill();
+
+  drawings[currentImage] = canvas.toDataURL();
+}
+
+function clearCanvas() {
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+}
+
+function switchImage(src) {
+  drawings[currentImage] = canvas.toDataURL();
+
+  currentImage = src;
+  document.getElementById("mainImage").src = src;
+
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+  if (drawings[src]) {
+    let img = new Image();
+    img.onload = function() {
+      ctx.drawImage(img, 0, 0);
+    };
+    img.src = drawings[src];
+  }
+}
+</script>
+
+</body>
+</html>
