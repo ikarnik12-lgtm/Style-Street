@@ -36,5 +36,38 @@ a {
   color: white;
 }
 body {
-  background-color: red;
+  background-color: black;
+  color: white;
+  font-family: Arial;
+}
+
+.product-page {
+  display: flex;
+  gap: 40px;
+  padding: 20px;
+}
+
+.product-info {
+  width: 40%;
+}
+
+.product-images {
+  width: 60%;
+  text-align: center;
+}
+
+.thumbnails img {
+  width: 60px;
+  margin: 5px;
+  cursor: pointer;
+}
+
+canvas {
+  border: 1px solid white;
+  margin-top: 10px;
+}
+
+a {
+  text-decoration: none;
+  color: white;
 }
