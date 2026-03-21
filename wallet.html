@@ -1,34 +1,21 @@
-<head>
-  <title>Wallet - Style Street</title>
-  <link rel="stylesheet" href="style.css">
-</head>
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Wallet - Style Street</title>
+  <title>Wallet</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-<nav>
-  <a href="index.html">Home</a>
-</nav>
+<a href="index.html">← Back</a>
 
 <div class="product-page">
 
-  <!-- LEFT SIDE -->
   <div class="product-info">
-    <h1>Custom Leather Wallet</h1>
+    <h1>Custom Wallet</h1>
     <p>$59</p>
-
-    <p>
-      Premium handcrafted leather wallet. Customize it with your own design.
-    </p>
-
-    <button>Add to Cart</button>
+    <p>Design your own wallet below.</p>
   </div>
 
-  <!-- RIGHT SIDE -->
   <div class="product-images">
 
     <img id="mainImage" src="wallet1.jpg" width="300">
@@ -38,8 +25,6 @@
       <img src="wallet2.jpg" onclick="switchImage('wallet2.jpg')">
       <img src="wallet3.jpg" onclick="switchImage('wallet3.jpg')">
     </div>
-
-    <h3>Draw Your Design</h3>
 
     <canvas id="drawingCanvas" width="300" height="300"></canvas>
 
@@ -52,8 +37,6 @@ const canvas = document.getElementById("drawingCanvas");
 const ctx = canvas.getContext("2d");
 
 let drawing = false;
-let currentImage = "wallet1.jpg";
-let drawings = {};
 
 canvas.addEventListener("mousedown", () => drawing = true);
 canvas.addEventListener("mouseup", () => drawing = false);
@@ -61,30 +44,15 @@ canvas.addEventListener("mousemove", draw);
 
 function draw(e) {
   if (!drawing) return;
-
   ctx.fillStyle = "white";
   ctx.beginPath();
   ctx.arc(e.offsetX, e.offsetY, 2, 0, Math.PI * 2);
   ctx.fill();
-
-  drawings[currentImage] = canvas.toDataURL();
 }
 
 function switchImage(src) {
-  drawings[currentImage] = canvas.toDataURL();
-
-  currentImage = src;
   document.getElementById("mainImage").src = src;
-
   ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-  if (drawings[src]) {
-    let img = new Image();
-    img.onload = function() {
-      ctx.drawImage(img, 0, 0);
-    };
-    img.src = drawings[src];
-  }
 }
 </script>
 
